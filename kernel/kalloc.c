@@ -8,11 +8,13 @@
 #include "spinlock.h"
 #include "riscv.h"
 #include "defs.h"
+#include "proc.h"
 
 void freerange(void *pa_start, void *pa_end);
 
 extern char end[]; // first address after kernel.
                    // defined by kernel.ld.
+extern struct proc proc[NPROC];
 
 struct run {
   struct run *next;
@@ -79,4 +81,31 @@ kalloc(void)
   if (r)
     memset((char *)r, 5, PGSIZE); // fill with junk
   return (void *)r;
+}
+
+uint64 freeup(void){
+    struct run *r;
+    uint64 count = 0;
+
+    acquire(&kmem.lock);
+
+    r = kmem.freelist;
+    while(r) ++count, r = r->next;
+
+    release(&kmem.lock);
+
+    return count * PGSIZE;
+}
+
+uint64 countproc(void){
+    struct proc *p;
+    uint64 count = 0;
+
+    for(p = proc; p < &proc[NPROC]; ++p){
+        acquire(&p->lock);
+        if(p->state != UNUSED) ++count;
+        release(&p->lock);
+    }
+
+    return count;
 }
