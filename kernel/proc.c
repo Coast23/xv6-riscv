@@ -146,6 +146,7 @@ found:
   p->context.ra = (uint64)forkret;
   p->context.sp = p->kstack + PGSIZE;
 
+  p->trace_mask = 0;
   return p;
 }
 
@@ -290,6 +291,9 @@ kfork(void)
   safestrcpy(np->name, p->name, sizeof(p->name));
 
   pid = np->pid;
+
+  // inherit parent's trace mask
+  np->trace_mask = p->trace_mask;
 
   release(&np->lock);
 

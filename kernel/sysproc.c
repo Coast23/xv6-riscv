@@ -118,3 +118,11 @@ sys_hello(void)
   printk("Hello from %d!\n", p->pid);
   return 0;
 }
+
+uint64 
+sys_trace(void) {
+  int trace_sys_mask;
+  argint(0, &trace_sys_mask);
+  myproc()->trace_mask |= trace_sys_mask;
+  return 0;
+}

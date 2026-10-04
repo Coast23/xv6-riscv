@@ -152,6 +152,7 @@ UPROGS=\
 	$U/_sync\
 	$U/_hello\
 	$U/_uptime\
+	$U/_trace\
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
