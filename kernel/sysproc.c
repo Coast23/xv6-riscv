@@ -110,3 +110,11 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
+
+uint64
+sys_hello(void)
+{
+  struct proc *p = myproc();
+  printk("Hello from %d!\n", p->pid);
+  return 0;
+}
