@@ -428,6 +428,7 @@ kwait(uint64 addr)
 void
 scheduler(void)
 {
+  printk("[boot] hart %d entering scheduler\n", cpuid());
   struct proc *p;
   struct cpu *c = mycpu();
 
@@ -521,6 +522,7 @@ forkret(void)
 
   if (first) {
     first = 0;
+    printk("[boot] proc.c: forkret() called, pid=%d\n", p->pid);
 
     // File system initialization must be run in the context of a
     // regular process (e.g., because it calls sleep), and thus cannot
@@ -529,6 +531,7 @@ forkret(void)
 
     // We can invoke kexec() now that file system is initialized.
     // Put the return value (argc) of kexec into a0.
+    printk("[boot] proc.c: executing /init\n");
     p->trapframe->a0 = kexec("/init", (char *[]){"/init", 0});
     if (p->trapframe->a0 == -1) {
       panic("exec");

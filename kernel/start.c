@@ -48,6 +48,7 @@ start()
   w_tp(id);
 
   // switch to supervisor mode and jump to main().
+  printk("[boot] start.c: start() done, hart=%ld\n", r_mhartid());
   asm volatile("mret");
 }
 
@@ -55,6 +56,7 @@ start()
 void
 timerinit()
 {
+ // printk("timerinit() function is called\n");
   // enable the sstc extension (i.e. stimecmp).
   w_menvcfg(r_menvcfg() | MENVCFG_STCE);
 

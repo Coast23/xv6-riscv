@@ -10,7 +10,15 @@ volatile static int started = 0;
 void
 main()
 {
+  printk("[boot] main.c: hart %d entered main\n", cpuid());
+
   if (cpuid() == 0) {
+
+    uint64 mem_bytes = PHYSTOP - KERNBASE;
+    printk("\n[info] max CPU count = %d\n", NCPU);
+    printk("[info] Physical memory = %ld MB (%ld bytes)\n",
+           mem_bytes / (1024 * 1024),
+           mem_bytes);
     consoleinit();
     printkinit();
     printk("\n");
@@ -41,5 +49,6 @@ main()
     plicinithart(); // ask PLIC for device interrupts
   }
 
+  printk("[boot] main.c: hart %d calling scheduler\n", cpuid());
   scheduler();
 }
