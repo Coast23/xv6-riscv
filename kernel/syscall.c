@@ -106,6 +106,9 @@ extern uint64 sys_sync(void);
 extern uint64 sys_hello(void);
 extern uint64 sys_trace(void);
 extern uint64 sys_sysinfo(void);
+extern uint64 sys_rwtest_worker(void);
+extern uint64 sys_rwtest_getstats(void);
+extern uint64 sys_rwtest_reset(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -136,6 +139,9 @@ static uint64 (*syscalls[])(void) = {
   [SYS_hello]   = sys_hello,
   [SYS_trace]   = sys_trace,
   [SYS_sysinfo] = sys_sysinfo,
+  [SYS_rwtest_worker] = sys_rwtest_worker,
+  [SYS_rwtest_getstats] = sys_rwtest_getstats,
+  [SYS_rwtest_reset] = sys_rwtest_reset,
   // clang-format on
 };
 
@@ -166,6 +172,9 @@ static char *sysnames[] = {
   [SYS_hello]   = "hello",
   [SYS_trace]   = "trace",
   [SYS_sysinfo] = "sysinfo",
+  [SYS_rwtest_worker] = "rwtest_worker",
+  [SYS_rwtest_getstats] = "rwtest_getstats",
+  [SYS_rwtest_reset] = "rwtest_reset",
 };
 
 void

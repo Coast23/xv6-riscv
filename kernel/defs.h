@@ -10,6 +10,7 @@ struct sleeplock;
 struct stat;
 struct superblock;
 struct rwlock;
+struct rwtest_stats;
 
 // bio.c
 void            binit(void);
@@ -191,6 +192,10 @@ void            acquire_read(struct rwlock *rwl);
 void            release_read(struct rwlock *rwl);
 void            acquire_write(struct rwlock *rwl);
 void            release_write(struct rwlock *rwl);
+void            rwtest_init(void);
+int             rwtest_worker(int mode, int loops);
+int             rwtest_reset(void);
+int             rwtest_getstats(struct rwtest_stats *stats);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))

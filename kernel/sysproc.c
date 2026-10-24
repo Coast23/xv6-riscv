@@ -6,6 +6,7 @@
 #include "spinlock.h"
 #include "proc.h"
 #include "vm.h"
+#include "kernel/rwtest.h"
 
 uint64
 sys_exit(void)
@@ -139,4 +140,28 @@ uint64 sys_sysinfo(void){
     if(copyout(myproc()->pagetable, myproc()->sz, addr, (char *)&info, sizeof(info)) < 0)
         return -1;
     return 0;
+}
+
+uint64 sys_rwtest_worker(void){
+    int mode;
+    int loops;
+
+    argint(0, &mode);
+    argint(1, &loops);
+    return rwtest_worker(mode, loops);
+}
+
+uint64 sys_rwtest_getstats(void){
+    struct rwtest_stats stats;
+    uint64 addr;
+
+    argaddr(0, &addr);
+    if(rwtest_getstats(&stats) < 0) return -1;
+    if(copyout(myproc()->pagetable, myproc()->sz, addr,
+          (char *)&stats, sizeof(stats)) < 0) return -1;
+    return 0;
+}
+
+uint64 sys_rwtest_reset(void){
+    return rwtest_reset();
 }

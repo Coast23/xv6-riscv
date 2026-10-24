@@ -46,3 +46,6 @@ entry("sync");
 entry("hello");
 entry("trace");
 entry("sysinfo");
+entry("rwtest_worker");
+entry("rwtest_getstats");
+entry("rwtest_reset");

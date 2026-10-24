@@ -36,6 +36,7 @@ main()
     iinit();            // inode table
     fileinit();         // file table
     virtio_disk_init(); // emulated hard disk
+    rwtest_init();      // reader-writer lock test state
     userinit();         // first user process
 
     __atomic_store_n(&started, 1, __ATOMIC_RELEASE);

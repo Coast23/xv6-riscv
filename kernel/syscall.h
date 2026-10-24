@@ -24,3 +24,6 @@
 #define SYS_hello  23
 #define SYS_trace  24
 #define SYS_sysinfo 25
+#define SYS_rwtest_worker 26
+#define SYS_rwtest_getstats 27
+#define SYS_rwtest_reset 28

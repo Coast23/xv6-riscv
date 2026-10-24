@@ -1,6 +1,7 @@
 #define SBRK_ERROR ((char *)-1)
 
 struct stat;
+struct rwtest_stats;
 
 // system calls
 int fork(void);
@@ -28,6 +29,9 @@ int sync(void);
 int hello(void);
 int trace(int);
 int sysinfo(struct sysinfo *);
+int rwtest_worker(int, int);
+int rwtest_getstats(struct rwtest_stats *);
+int rwtest_reset(void);
 
 // ulib.c
 int stat(const char *, struct stat *);
