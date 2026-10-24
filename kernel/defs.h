@@ -9,6 +9,7 @@ struct spinlock;
 struct sleeplock;
 struct stat;
 struct superblock;
+struct rwlock;
 
 // bio.c
 void            binit(void);
@@ -183,6 +184,13 @@ void            plic_complete(int);
 void            virtio_disk_init(void);
 void            virtio_disk_rw(struct buf *, int);
 void            virtio_disk_intr(void);
+
+// rwlock.c
+void            rwl_init(struct rwlock *rwl);
+void            acquire_read(struct rwlock *rwl);
+void            release_read(struct rwlock *rwl);
+void            acquire_write(struct rwlock *rwl);
+void            release_write(struct rwlock *rwl);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
