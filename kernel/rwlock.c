@@ -87,6 +87,11 @@ int rwtest_worker(int mode, int loops){
                 stats.max_readers = active_readers;
             if(active_writers != 0)
                 stats.violations++;
+            release(&stats_lock);
+
+            yield();
+
+            acquire(&stats_lock);
             active_readers--;
             release(&stats_lock);
             release_read(&test_lock);
@@ -100,6 +105,12 @@ int rwtest_worker(int mode, int loops){
                 stats.max_writers = active_writers;
             if(active_readers != 0 || active_writers > 1)
                 stats.violations++;
+            stats.counter++;
+            release(&stats_lock);
+
+            yield();
+
+            acquire(&stats_lock);
             active_writers--;
             release(&stats_lock);
             release_write(&test_lock);
@@ -120,6 +131,7 @@ int rwtest_reset(void){
     acquire(&stats_lock);
     stats.read_ops = 0;
     stats.write_ops = 0;
+    stats.counter = 0;
     stats.max_readers = 0;
     stats.max_writers = 0;
     stats.violations = 0;
