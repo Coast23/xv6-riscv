@@ -13,7 +13,7 @@ void rwl_init(struct rwlock *rwl){
 
 void acquire_read(struct rwlock *rwl){
     acquire(&rwl->lk);
-    while(rwl->writer_active){
+    while(rwl->writer_active || rwl->waiting_writers > 0){
         sleep_prepare(&rwl->readers);
         release(&rwl->lk);
         sleep();
@@ -29,7 +29,7 @@ void release_read(struct rwlock *rwl){
         panic("release_read: no readers to release");
     }
     rwl->readers--;
-    if(rwl->readers == 0){
+    if(rwl->readers == 0 && rwl->waiting_writers > 0){
         wakeup(&rwl->writer_active);
     }
     release(&rwl->lk);
@@ -37,6 +37,7 @@ void release_read(struct rwlock *rwl){
 
 void acquire_write(struct rwlock *rwl){
     acquire(&rwl->lk);
+    rwl->waiting_writers++;
 
     while(rwl->writer_active || rwl->readers > 0){
         sleep_prepare(&rwl->writer_active);
@@ -44,6 +45,7 @@ void acquire_write(struct rwlock *rwl){
         sleep();
         acquire(&rwl->lk);
     }
+    rwl->waiting_writers--;
     rwl->writer_active = 1;
     release(&rwl->lk);
 }
@@ -54,8 +56,12 @@ void release_write(struct rwlock *rwl){
         panic("release_write: no writer to release");
     }
     rwl->writer_active = 0;
-    wakeup(&rwl->readers);
-    wakeup(&rwl->writer_active);
+    if(rwl->waiting_writers > 0){
+        wakeup(&rwl->writer_active);
+    }
+    else{
+        wakeup(&rwl->readers);
+    }
     release(&rwl->lk);
 }
 
