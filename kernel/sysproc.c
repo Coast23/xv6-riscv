@@ -169,3 +169,12 @@ uint64 sys_rwtest_reset(void){
 uint64 sys_rwtest_wait_writer(void){
     return rwtest_wait_writer();
 }
+
+uint64 sys_deadlocktest(void){
+    int role;
+    int mode;
+
+    argint(0, &role);
+    argint(1, &mode);
+    return deadlocktest_worker(role, mode);
+}

@@ -197,6 +197,8 @@ int             rwtest_worker(int mode, int loops);
 int             rwtest_reset(void);
 int             rwtest_getstats(struct rwtest_stats *stats);
 int             rwtest_wait_writer(void);
+void            deadlocktest_init(void);
+int             deadlocktest_worker(int role, int mode);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))
