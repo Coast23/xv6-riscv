@@ -27,3 +27,4 @@
 #define SYS_rwtest_worker 26
 #define SYS_rwtest_getstats 27
 #define SYS_rwtest_reset 28
+#define SYS_rwtest_wait_writer 29

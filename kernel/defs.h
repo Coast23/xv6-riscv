@@ -188,7 +188,7 @@ void            virtio_disk_intr(void);
 
 // rwlock.c
 void            rwl_init(struct rwlock *rwl);
-void            acquire_read(struct rwlock *rwl);
+int             acquire_read(struct rwlock *rwl);
 void            release_read(struct rwlock *rwl);
 void            acquire_write(struct rwlock *rwl);
 void            release_write(struct rwlock *rwl);
@@ -196,6 +196,7 @@ void            rwtest_init(void);
 int             rwtest_worker(int mode, int loops);
 int             rwtest_reset(void);
 int             rwtest_getstats(struct rwtest_stats *stats);
+int             rwtest_wait_writer(void);
 
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x) / sizeof((x)[0]))

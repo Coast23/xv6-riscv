@@ -165,3 +165,7 @@ uint64 sys_rwtest_getstats(void){
 uint64 sys_rwtest_reset(void){
     return rwtest_reset();
 }
+
+uint64 sys_rwtest_wait_writer(void){
+    return rwtest_wait_writer();
+}

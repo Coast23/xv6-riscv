@@ -32,6 +32,7 @@ int sysinfo(struct sysinfo *);
 int rwtest_worker(int, int);
 int rwtest_getstats(struct rwtest_stats *);
 int rwtest_reset(void);
+int rwtest_wait_writer(void);
 
 // ulib.c
 int stat(const char *, struct stat *);

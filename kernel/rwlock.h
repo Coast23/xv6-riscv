@@ -8,7 +8,7 @@ struct rwlock {
 };
 
 void rwl_init(struct rwlock *rwl);
-void acquire_read(struct rwlock *rwl);
+int acquire_read(struct rwlock *rwl);
 void release_read(struct rwlock *rwl);
 void acquire_write(struct rwlock *rwl);
 void release_write(struct rwlock *rwl);
