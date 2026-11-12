@@ -111,6 +111,7 @@ extern uint64 sys_rwtest_getstats(void);
 extern uint64 sys_rwtest_reset(void);
 extern uint64 sys_rwtest_wait_writer(void);
 extern uint64 sys_deadlocktest(void);
+extern uint64 sys_vmprint(void);
 
 // An array mapping syscall numbers from syscall.h
 // to the function that handles the system call.
@@ -146,6 +147,7 @@ static uint64 (*syscalls[])(void) = {
   [SYS_rwtest_reset] = sys_rwtest_reset,
   [SYS_rwtest_wait_writer] = sys_rwtest_wait_writer,
   [SYS_deadlocktest] = sys_deadlocktest,
+  [SYS_vmprint] = sys_vmprint,
   // clang-format on
 };
 
@@ -181,6 +183,7 @@ static char *sysnames[] = {
   [SYS_rwtest_reset] = "rwtest_reset",
   [SYS_rwtest_wait_writer] = "rwtest_wait_writer",
   [SYS_deadlocktest] = "deadlocktest",
+  [SYS_vmprint] = "vmprint",
 };
 
 void

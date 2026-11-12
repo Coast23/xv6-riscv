@@ -178,3 +178,11 @@ uint64 sys_deadlocktest(void){
     argint(1, &mode);
     return deadlocktest_worker(role, mode);
 }
+
+uint64 sys_vmprint(void){
+    struct proc *p = myproc();
+
+    if(p == 0 || p->pagetable == 0) return -1;
+    vmprint(p->pagetable);
+    return 0;
+}

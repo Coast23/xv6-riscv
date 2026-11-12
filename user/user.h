@@ -34,6 +34,7 @@ int rwtest_getstats(struct rwtest_stats *);
 int rwtest_reset(void);
 int rwtest_wait_writer(void);
 int deadlocktest(int, int);
+int vmprint(void);
 
 // ulib.c
 int stat(const char *, struct stat *);

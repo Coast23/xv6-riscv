@@ -29,3 +29,4 @@
 #define SYS_rwtest_reset 28
 #define SYS_rwtest_wait_writer 29
 #define SYS_deadlocktest 30
+#define SYS_vmprint 31

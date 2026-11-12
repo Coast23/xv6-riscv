@@ -115,6 +115,34 @@ walk(pagetable_t pagetable, uint64 va, int alloc)
   return &pagetable[PX(0, va)];
 }
 
+static void vmprint_level(pagetable_t pagetable, int level, int depth){
+    for(int i = 0; i < 512; ++i){
+        pte_t pte = pagetable[i];
+
+        if((pte & PTE_V) == 0) continue;
+
+        for(int j = 0; j < depth; ++j) printk("  ");
+
+        uint64 pa = PTE2PA(pte);
+        printk("level=%d index=%d pte=%lx pa=%lx", level, i, pte, pa);
+
+        if((pte & (PTE_R | PTE_W | PTE_X)) == 0) printk(" non-leaf\n");
+      
+        if(level > 0) vmprint_level((pagetable_t)pa, level - 1, depth + 1);
+        else printk(" leaf R=%d W=%d X=%d U=%d\n",
+              (pte & PTE_R) != 0,
+              (pte & PTE_W) != 0,
+              (pte & PTE_X) != 0,
+              (pte & PTE_U) != 0);
+    
+    }
+}
+
+void vmprint(pagetable_t pagetable){
+    printk("pagetable=%p\n", pagetable);
+    vmprint_level(pagetable, 2, 1);
+}
+
 // Look up a virtual address, return the physical address,
 // or 0 if not mapped.
 // Can only be used to look up user pages.

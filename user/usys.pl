@@ -51,3 +51,4 @@ entry("rwtest_getstats");
 entry("rwtest_reset");
 entry("rwtest_wait_writer");
 entry("deadlocktest");
+entry("vmprint");
