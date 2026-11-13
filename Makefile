@@ -158,7 +158,8 @@ UPROGS=\
 	$U/_sysinfotest\
 	$U/_test_rwlock\
 	$U/_test_deadlock\
-	$U/_test_vmprint
+	$U/_test_vmprint\
+	$U/_cowtest
 
 fs.img: mkfs/mkfs README $(UPROGS)
 	mkfs/mkfs fs.img README $(UPROGS)
