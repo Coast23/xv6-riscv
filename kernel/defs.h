@@ -64,6 +64,8 @@ void            kfree(void *);
 void            kinit(void);
 uint64          freeup(void);
 uint64          countproc(void);
+int             kref_inc(void *);
+int             kref_get(void *);
 
 // log.c
 void            initlog(int, struct superblock*);
@@ -174,6 +176,7 @@ int             copyin(pagetable_t, uint64, char *, uint64, uint64);
 int             copyinstr(pagetable_t, uint64, char *, uint64, uint64);
 int             ismapped(pagetable_t, uint64);
 uint64          vmfault(pagetable_t, uint64, uint64, int);
+int             cowfault(pagetable_t, uint64, uint64);
 void            vmprint(pagetable_t);
 
 // plic.c
